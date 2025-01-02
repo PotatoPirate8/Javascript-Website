@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Document</title>
+</head>
+<body class="parallax-body" style="background-image: url('images/gettyimages-1428792471-640x640.jpg ');">
+    <div id="UserInfo" class="text-center mt-4">
+        <!-- User info will be displayed here -->
+    </div>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="header">
+        <div class="container mx-auto w-full px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Leaderboard</h1>
+            </div>
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+            <button id="clearScores" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-4">Clear Scores</button>
+        </div>
+    </div>
+    <br>
+
+    <div class="leaderboard-container">
+        <div class="flex justify-center space-x-4 mt-4">
+            <select id="quizSelect" class="bg-gray-200 text-gray-800 font-bold py-2 px-4 rounded">
+                <option value="">All Quizzes</option>
+                <option value="user_created">User Created Quizzes</option>
+                <option value="Minecraft">Minecraft</option>
+                <option value="Math">Math</option>
+                <option value="History School">History School</option>
+                <option value="History Games">History Games</option>
+                <option value="Guess the Character">Guess the Character</option>
+                <option value="English">English</option>
+                <option value="Biology">Biology</option>
+            </select>
+            <button id="viewScores" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">View Scores</button>
+        </div>
+
+        <!-- Add search bar (initially hidden) -->
+        <div id="searchContainer" class="hidden mt-4 flex justify-center">
+            <input type="text" id="quizSearch" 
+                   class="bg-gray-100 border border-gray-300 text-gray-800 rounded py-2 px-4 w-1/2"
+                   placeholder="Search user created quizzes...">
+        </div>
+
+        <div class="flex justify-center space-x-4 mt-4 mb-6">
+            <button id="sortUser" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Sort by User</button>
+            <button id="sortAsc" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Sort Ascending</button>
+            <button id="sortDesc" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Sort Descending</button>
+        </div>
+        
+        <!-- New scores display container -->
+        <div class="max-w-2xl mx-auto">
+            <div id="leaderboard" class="bg-white rounded-lg shadow-md p-6 space-y-4">
+                <!-- Scores will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <br>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script src="script.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            const leaderboard = document.getElementById('leaderboard');
+            const quizSelect = document.getElementById('quizSelect');
+            const searchContainer = document.getElementById('searchContainer');
+            const searchInput = document.getElementById('quizSearch');
+            const viewScoresButton = document.getElementById('viewScores');
+            const sortUserButton = document.getElementById('sortUser');
+            const sortAscButton = document.getElementById('sortAsc');
+            const sortDescButton = document.getElementById('sortDesc');
+
+            // Toggle search bar visibility
+            quizSelect.addEventListener('change', () => {
+                const isUserCreated = quizSelect.value === 'user_created';
+                searchContainer.classList.toggle('hidden', !isUserCreated);
+                if (isUserCreated) {
+                    filterUserCreatedQuizzes();
+                } else {
+                    displayScores(scores);
+                }
+            });
+
+            // Filter user created quizzes
+            function filterUserCreatedQuizzes(searchTerm = '') {
+                const createdQuizzes = JSON.parse(localStorage.getItem('createdQuizzes')) || [];
+                let filteredScores = scores.filter(score => 
+                    createdQuizzes.some(quiz => quiz.title === score.quiz)
+                );
+
+                if (searchTerm) {
+                    filteredScores = filteredScores.filter(score => 
+                        score.quiz.toLowerCase().includes(searchTerm.toLowerCase())
+                    );
+                }
+
+                displayScores(filteredScores);
+            }
+
+            // Search functionality
+            searchInput.addEventListener('input', (e) => {
+                filterUserCreatedQuizzes(e.target.value);
+            });
+
+            // View scores button handler
+            viewScoresButton.addEventListener('click', () => {
+                const selectedQuiz = quizSelect.value;
+                if (selectedQuiz === 'user_created') {
+                    filterUserCreatedQuizzes(searchInput.value);
+                } else if (selectedQuiz) {
+                    const filteredScores = scores.filter(score => score.quiz === selectedQuiz);
+                    displayScores(filteredScores);
+                } else {
+                    displayScores(scores);
+                }
+            });
+
+            function displayScores(filteredScores) {
+                leaderboard.innerHTML = '';
+                if (filteredScores.length === 0) {
+                    leaderboard.innerHTML = `
+                        <div class="text-center text-gray-600 py-4">
+                            No scores available
+                        </div>`;
+                    return;
+                }
+                
+                filteredScores.forEach(score => {
+                    const scoreElement = document.createElement('div');
+                    scoreElement.className = 'bg-gray-100 rounded-lg p-4 flex justify-between items-center hover:bg-gray-200 transition-colors';
+                    scoreElement.innerHTML = `
+                        <div class="flex-1">
+                            <span class="font-bold text-gray-800">${score.user || 'Anonymous'}</span>
+                            <span class="text-gray-600 mx-2">•</span>
+                            <span class="text-gray-600">${score.quiz}</span>
+                        </div>
+                        <div class="text-right">
+                            <span class="bg-blue-100 text-blue-800 font-bold py-1 px-3 rounded-full">
+                                Score: ${score.score}
+                            </span>
+                        </div>
+                    `;
+                    leaderboard.appendChild(scoreElement);
+                });
+            }
+
+            function sortScores(criteria) {
+                let filteredScores = [...scores];
+                const selectedQuiz = quizSelect.value;
+                
+                // Filter by selected quiz type
+                if (selectedQuiz === 'user_created') {
+                    const createdQuizzes = JSON.parse(localStorage.getItem('createdQuizzes')) || [];
+                    filteredScores = filteredScores.filter(score => 
+                        createdQuizzes.some(quiz => quiz.title === score.quiz)
+                    );
+                    if (searchInput.value) {
+                        filteredScores = filteredScores.filter(score => 
+                            score.quiz.toLowerCase().includes(searchInput.value.toLowerCase())
+                        );
+                    }
+                } else if (selectedQuiz) {
+                    filteredScores = filteredScores.filter(score => score.quiz === selectedQuiz);
+                }
+
+                // Sort based on criteria
+                if (criteria === 'user') {
+                    filteredScores.sort((a, b) => {
+                        const userA = (a.user || '').toLowerCase();
+                        const userB = (b.user || '').toLowerCase();
+                        return userA.localeCompare(userB);
+                    });
+                } else {
+                    filteredScores.sort((a, b) => {
+                        // Extract numerical scores from different formats
+                        const getNumericScore = (score) => {
+                            if (typeof score.score === 'string') {
+                                if (score.score.includes('out of')) {
+                                    // Handle "X out of Y" format
+                                    const [achieved, total] = score.score.split(' out of ').map(num => parseInt(num));
+                                    return (achieved / total) * 100; // Convert to percentage
+                                } else {
+                                    // Handle direct number format
+                                    return parseInt(score.score);
+                                }
+                            }
+                            return score.percentage || 0; // Use percentage if available
+                        };
+
+                        const scoreA = getNumericScore(a);
+                        const scoreB = getNumericScore(b);
+                        
+                        return criteria === 'asc' ? scoreA - scoreB : scoreB - scoreA;
+                    });
+                }
+                
+                displayScores(filteredScores);
+            }
+
+            sortUserButton.addEventListener('click', () => {
+                sortScores('user');
+            });
+
+            sortAscButton.addEventListener('click', () => {
+                sortScores('asc');
+            });
+
+            sortDescButton.addEventListener('click', () => {
+                sortScores('desc');
+            });
+
+            document.getElementById('clearScores').addEventListener('click', () => {
+                localStorage.removeItem('scores');
+                leaderboard.innerHTML = '';
+            });
+
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                document.getElementById('UserInfo').innerHTML = `
+                <div class="bg-green-100 text-green-800 font-bold py-2 px-4 rounded inline-block">
+                    Welcome, ${currentUser}!
+                </div>`;
+                const loginButton = document.querySelector('button[onclick="location.href=\'login.html\'"]');
+                if (loginButton) {
+                    loginButton.textContent = 'Profile';
+                    loginButton.setAttribute('onclick', "location.href='profile.html'");
+                }
+            }
+
+            // Display all scores initially
+            displayScores(scores);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>History-Quiz Website</title>
+    <style>
+        body {
+            background-image: url('images/stthomas-history-time.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .header {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .quiz {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .footer {
+            position: sticky;
+        }
+    </style>
+</head>
+<body class="parallax-body">
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="header">
+        <div class="container mx-auto w-full px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Quiz Website</h1>
+            </div>
+            <div class="quiz-type flex justify-center space-x-4 mt-4">
+                <h2 class="text-4xl font-bold text-blue-900">School-History</h2>
+            </div>  
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+        </div>
+        <div id="UserInfo"></div>
+    </div>
+    <div class="quiz bg-gray-200 py-10">
+        <div class="container mx-auto w-full">
+            <div class="w-full max-w-5xl">
+                <div class="bg-white p-12 rounded shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Question 1</h2>
+                    <p class="text-gray-600 mb-6 text-xl">When did World War 2 End</p>
+                    <form id="quizForm">
+                        <input type="radio" name="answer" value="a" id="a" required>
+                        <label for="a" class="ml-2">a) 1969</label><br>
+                        <input type="radio" name="answer" value="b" id="b">
+                        <label for="b" class="ml-2">b) 1917</label><br>
+                        <input type="radio" name="answer" value="c" id="c">
+                        <label for="c" class="ml-2">c) 1845</label><br>
+                        <input type="radio" name="answer" value="d" id="d">
+                        <label for="d" class="ml-2">d) 1945</label><br>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script src="script.js"></script>
+    <script>
+    let quizQuestions = [
+        {
+            question: "When did World War 2 End",
+            options: ["1969", "1917", "1845", "1945"],
+            correctAnswer: "d",
+            explanation: "World War 2 ended in 1945 with the surrender of Japan and Germany."
+        },
+        {
+            question: "Which assassination kickstarted World War 1",
+            options: ["Abraham Lincoln", "Franz Ferdinand", "Diddy", "Donald Trump"],
+            correctAnswer: "b",
+            explanation: "The assassination of Archduke Franz Ferdinand of Austria-Hungary in 1914 is widely considered the trigger for World War 1."
+        },
+        {
+            question: "What was the largest empire that ever existed",
+            options: ["Mongol Empire", "British Empire", "Roman Empire", "Ottoman Empire"],
+            correctAnswer: "b",
+            explanation: "The British Empire was the largest empire in history, covering NewQuiz 24% of the Earth's total land area."
+        },
+        {
+            question: "Who was the first President of the United States?",
+            options: ["George Washington", "Thomas Jefferson", "Abraham Lincoln", "John Adams"],
+            correctAnswer: "a",
+            explanation: "George Washington was the first President of the United States, serving from 1789 to 1797."
+        },
+        {
+            question: "What year did the Berlin Wall fall?",
+            options: ["1989", "1991", "1975", "1961"],
+            correctAnswer: "a",
+            explanation: "The Berlin Wall fell on November 9, 1989, symbolizing the end of the Cold War."
+        },
+        {
+            question: "Who was the British Prime Minister during World War 2?",
+            options: ["Winston Churchill", "Neville Chamberlain", "Margaret Thatcher", "Tony Blair"],
+            correctAnswer: "a",
+            explanation: "Winston Churchill was the Prime Minister of the United Kingdom during most of World War 2."
+        },
+        {
+            question: "Which country gifted the Statue of Liberty to the United States?",
+            options: ["France", "Spain", "Italy", "Germany"],
+            correctAnswer: "a",
+            explanation: "France gifted the Statue of Liberty to the United States in 1886 as a symbol of friendship."
+        },
+        {
+            question: "What year did the Titanic sink?",
+            options: ["1912", "1905", "1898", "1923"],
+            correctAnswer: "a",
+            explanation: "The Titanic sank on its maiden voyage in the early morning of April 15, 1912."
+        },
+        {
+            question: "Who was the first man to step on the moon?",
+            options: ["Neil Armstrong", "Buzz Aldrin", "Yuri Gagarin", "Michael Collins"],
+            correctAnswer: "a",
+            explanation: "Neil Armstrong was the first person to step on the moon during the Apollo 11 mission in 1969."
+        },
+        {
+            question: "What was the name of the ship that brought the Pilgrims to America in 1620?",
+            options: ["Mayflower", "Santa Maria", "Nina", "Pinta"],
+            correctAnswer: "a",
+            explanation: "The Mayflower brought the Pilgrims to Plymouth, Massachusetts in 1620."
+        }
+    ];  
+
+    let userAnswers = [];
+    let currentQuestionIndex = 0;
+
+    function renderQuestion() {
+        const question = quizQuestions[currentQuestionIndex];
+        document.querySelector('.quiz').innerHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Question ${currentQuestionIndex + 1}</h2>
+                        <p class="text-gray-600 mb-6 text-xl">${question.question}</p>
+                        <form id="quizForm">
+                            ${question.options.map((option, index) => `
+                                <input type="radio" name="answer" value="${String.fromCharCode(97 + index)}" id="${String.fromCharCode(97 + index)}" ${index === 0 ? 'required' : ''}>
+                                <label for="${String.fromCharCode(97 + index)}" class="ml-2">${String.fromCharCode(97 + index)}) ${option}</label><br>
+                            `).join('')}
+                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selectedAnswer: selectedAnswer,
+                isCorrect: selectedAnswer === question.correctAnswer
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < quizQuestions.length) {
+                renderQuestion();
+            } else {
+                renderResults();
+            }
+        });
+    }
+
+    function renderResults() {
+        const correctAnswersCount = userAnswers.filter(answer => answer.isCorrect).length;
+        
+        // Save the score to localStorage
+        let scores = JSON.parse(localStorage.getItem('scores')) || [];
+        scores.push({ user: localStorage.getItem('currentUser'), quiz: 'History School', score: correctAnswersCount });
+        localStorage.setItem('scores', JSON.stringify(scores));
+
+        const resultsHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Quiz Results</h2>
+                        <p class="text-gray-600 mb-6 text-xl">You got ${correctAnswersCount} out of ${quizQuestions.length} questions correct.</p>
+                        <div class="space-y-4">
+                            ${userAnswers.map(answer => {
+                                const question = quizQuestions[answer.questionIndex];
+                                return `
+                                <div class="bg-${answer.isCorrect ? 'green' : 'red'}-100 p-4 rounded">
+                                    <h3 class="font-bold text-lg mb-2">Question ${answer.questionIndex + 1}: ${question.question}</h3>
+                                    <p class="mb-2">Your Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(answer.selectedAnswer)]} (${answer.selectedAnswer})</p>
+                                    <p class="mb-2">Correct Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(question.correctAnswer)]} (${question.correctAnswer})</p>
+                                    <p class="italic">${question.explanation}</p>
+                                </div>
+                            `}).join('')}
+                        </div>
+                        <button onclick="location.reload()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Restart Quiz</button>
+                        <button onclick="location.href='Leaderboard.html'" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">View Leaderboard</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.quiz').innerHTML = resultsHTML;
+    }
+
+    // Initialize dark mode based on localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+        const isDarkMode = localStorage.getItem('darkMode') === 'true';
+        if (isDarkMode) {
+            document.body.classList.add('dark-mode');
+            const darkModeToggle = document.querySelector('.dark-mode-toggle i');
+            if (darkModeToggle) {
+                darkModeToggle.classList.remove('fa-moon');
+                darkModeToggle.classList.add('fa-sun');
+            }
+        }
+    });
+
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        localStorage.setItem('darkMode', isDarkMode);
+        const darkModeToggle = document.querySelector('.dark-mode-toggle i');
+        if (darkModeToggle) {
+            darkModeToggle.classList.toggle('fa-moon');
+            darkModeToggle.classList.toggle('fa-sun');
+        }
+    }
+
+    renderQuestion();
+    </script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Minecraft Quiz Website</title>
+    <style>
+        body {
+            background-image: url('images/minecraft-review-image-1024x587.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .header {
+            background-color: rgba(34, 139, 34);
+        }
+        .quiz {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .footer {
+            position: sticky;
+        }
+    </style>
+</head>
+<body class="parallax-body">
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="header">
+        <div class="container mx-auto w-full px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Minecraft Quiz</h1>
+            </div>
+            <div class="quiz-type flex justify-center space-x-4 mt-4">
+                <h2 class="text-4xl font-bold text-green-900">Minecraft_Video Games</h2>
+            </div>  
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+        </div>
+        <div id="UserInfo"></div>
+    </div>
+    <div class="quiz bg-gray-200 py-10">
+        <div class="container mx-auto w-full">
+            <div class="w-full max-w-5xl">
+                <div class="bg-white p-12 rounded shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Question 1</h2>
+                    <p class="text-gray-600 mb-6 text-xl">What is the main material used to craft a pickaxe?</p>
+                    <form id="quizForm">
+                        <input type="radio" name="answer" value="a" id="a" required>
+                        <label for="a" class="ml-2">a) Wood</label><br>
+                        <input type="radio" name="answer" value="b" id="b">
+                        <label for="b" class="ml-2">b) Stone</label><br>
+                        <input type="radio" name="answer" value="c" id="c">
+                        <label for="c" class="ml-2">c) Iron</label><br>
+                        <input type="radio" name="answer" value="d" id="d">
+                        <label for="d" class="ml-2">d) Diamond</label><br>
+                        <button type="submit" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script>
+    let quizQuestions = [
+        {
+            question: "What is the main material used to craft a pickaxe?",
+            options: ["Wood", "Stone", "Iron", "Diamond"],
+            correctAnswer: "a",
+            explanation: "The main material used to craft a pickaxe is wood."
+        },
+        {
+            question: "What do you need to enter the Nether?",
+            options: ["Obsidian", "Diamond", "Gold", "Iron"],
+            correctAnswer: "a",
+            explanation: "You need obsidian to create a portal to enter the Nether."
+        },
+        {
+            question: "Which mob explodes when it gets close to you?",
+            options: ["Zombie", "Skeleton", "Creeper", "Spider"],
+            correctAnswer: "c",
+            explanation: "The Creeper is the mob that explodes when it gets close to you."
+        },
+        {
+            question: "What is the rarest ore in Minecraft?",
+            options: ["Gold", "Iron", "Diamond", "Emerald"],
+            correctAnswer: "d",
+            explanation: "Emerald is the rarest ore in Minecraft."
+        },
+        {
+            question: "What do you need to tame a wolf?",
+            options: ["Bone", "Meat", "Fish", "Apple"],
+            correctAnswer: "a",
+            explanation: "You need a bone to tame a wolf."
+        },
+        {
+            question: "What is the maximum number of blocks a piston can push?",
+            options: ["10", "12", "15", "20"],
+            correctAnswer: "b",
+            explanation: "A piston can push a maximum of 12 blocks."
+        },
+        {
+            question: "What is the name of the dimension where the Ender Dragon resides?",
+            options: ["Overworld", "Nether", "End", "Sky"],
+            correctAnswer: "c",
+            explanation: "The Ender Dragon resides in the End dimension."
+        },
+        {
+            question: "What is the main ingredient to brew a potion of healing?",
+            options: ["Nether Wart", "Glistering Melon", "Blaze Powder", "Ghast Tear"],
+            correctAnswer: "b",
+            explanation: "The main ingredient to brew a potion of healing is Glistering Melon."
+        },
+        {
+            question: "What is the name of the item that can be used to store experience points?",
+            options: ["Ender Chest", "Shulker Box", "Grindstone", "Bottle o' Enchanting"],
+            correctAnswer: "d",
+            explanation: "The Bottle o' Enchanting can be used to store experience points."
+        },
+        {
+            question: "What is the name of the boss mob that can be summoned using Wither Skeleton skulls?",
+            options: ["Ender Dragon", "Wither", "Elder Guardian", "Evoker"],
+            correctAnswer: "b",
+            explanation: "The Wither is the boss mob that can be summoned using Wither Skeleton skulls."
+        }
+    ];  
+
+    let userAnswers = [];
+    let currentQuestionIndex = 0;
+
+    function renderQuestion() {
+        const question = quizQuestions[currentQuestionIndex];
+        document.querySelector('.quiz').innerHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Question ${currentQuestionIndex + 1}</h2>
+                        <p class="text-gray-600 mb-6 text-xl">${question.question}</p>
+                        <form id="quizForm">
+                            ${question.options.map((option, index) => `
+                                <input type="radio" name="answer" value="${String.fromCharCode(97 + index)}" id="${String.fromCharCode(97 + index)}" ${index === 0 ? 'required' : ''}>
+                                <label for="${String.fromCharCode(97 + index)}" class="ml-2">${String.fromCharCode(97 + index)}) ${option}</label><br>
+                            `).join('')}
+                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selectedAnswer: selectedAnswer,
+                isCorrect: selectedAnswer === question.correctAnswer
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < quizQuestions.length) {
+                renderQuestion();
+            } else {
+                renderResults();
+            }
+        });
+    }
+
+    function renderResults() {
+        const correctAnswersCount = userAnswers.filter(answer => answer.isCorrect).length;
+        
+        // Save the score to localStorage
+        let scores = JSON.parse(localStorage.getItem('scores')) || [];
+        scores.push({ user: localStorage.getItem('currentUser'), quiz: 'Minecraft', score: correctAnswersCount });
+        localStorage.setItem('scores', JSON.stringify(scores));
+
+        const resultsHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Quiz Results</h2>
+                        <p class="text-gray-600 mb-6 text-xl">You got ${correctAnswersCount} out of ${quizQuestions.length} questions correct.</p>
+                        <div class="space-y-4">
+                            ${userAnswers.map(answer => {
+                                const question = quizQuestions[answer.questionIndex];
+                                return `
+                                <div class="bg-${answer.isCorrect ? 'green' : 'red'}-100 p-4 rounded">
+                                    <h3 class="font-bold text-lg mb-2">Question ${answer.questionIndex + 1}: ${question.question}</h3>
+                                    <p class="mb-2">Your Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(answer.selectedAnswer)]} (${answer.selectedAnswer})</p>
+                                    <p class="mb-2">Correct Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(question.correctAnswer)]} (${question.correctAnswer})</p>
+                                    <p class="italic">${question.explanation}</p>
+                                </div>
+                            `}).join('')}
+                        </div>
+                        <button onclick="location.reload()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Restart Quiz</button>
+                        <button onclick="location.href='Leaderboard.html'" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">View Leaderboard</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.quiz').innerHTML = resultsHTML;
+    }
+
+    renderQuestion();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

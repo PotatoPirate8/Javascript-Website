@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play Quiz</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .quiz-container {
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+    </style>
+</head>
+<body class="parallax-body bg-gray-100">
+    <div id="UserInfo" class="text-center mt-4">
+        <!-- User info will be displayed here -->
+    </div>
+    
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="container mx-auto w-full px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Custom Quiz</h1>
+            </div>
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quiz Content -->
+    <div class="quiz bg-gray-200 py-10">
+        <div class="container mx-auto w-full">
+            <div class="w-full max-w-5xl">
+                <div class="bg-white p-12 rounded shadow-md">
+                    <h1 id="quizTitle" class="text-3xl font-bold text-gray-900 mb-6"></h1>
+                    <div id="questionContainer">
+                        <!-- Questions will be displayed here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Update user info
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                document.getElementById('UserInfo').innerHTML = `
+                <div class="bg-green-100 text-green-800 font-bold py-2 px-4 rounded inline-block">
+                    Welcome, ${currentUser}!
+                </div>`;
+                const loginButton = document.querySelector('button[onclick="location.href=\'login.html\'"]');
+                if (loginButton) {
+                    loginButton.textContent = 'Profile';
+                    loginButton.setAttribute('onclick', "location.href='profile.html'");
+                }
+            }
+
+            // Existing quiz logic
+            const quiz = JSON.parse(localStorage.getItem('currentQuiz'));
+            if (!quiz) {
+                alert('No quiz selected!');
+                window.location.href = 'NewQuiz.html';
+                return;
+            }
+
+            const questionContainer = document.getElementById('questionContainer');
+            document.getElementById('quizTitle').textContent = quiz.title;
+
+            let currentQuestion = 0;
+            let score = 0;
+
+            // Start displaying questions immediately
+            displayQuestion();
+
+            function displayQuestion() {
+                const question = quiz.questions[currentQuestion];
+                questionContainer.innerHTML = `
+                    <div class="mb-6">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Question ${currentQuestion + 1} of ${quiz.questions.length}</h2>
+                        <p class="text-gray-600 mb-6 text-xl">${question.text}</p>
+                        ${question.image ? `<img src="${question.image}" alt="Question Image" class="max-w-full mb-6">` : ''}
+                        <form id="quizForm">
+                            ${question.options.map((option, index) => `
+                                <div class="mb-2">
+                                    <input type="radio" name="answer" value="${index}" id="option${index}" required>
+                                    <label for="option${index}" class="ml-2 text-gray-700">
+                                        ${String.fromCharCode(97 + index)}) ${option}
+                                    </label>
+                                </div>
+                            `).join('')}
+                            <button type="button" onclick="window.selectAnswer()" 
+                                    class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                `;
+            }
+
+            window.selectAnswer = function() {
+                const selectedInput = questionContainer.querySelector('input[name="answer"]:checked');
+                if (!selectedInput) {
+                    alert('Please select an answer');
+                    return;
+                }
+
+                const selectedIndex = parseInt(selectedInput.value);
+                const question = quiz.questions[currentQuestion];
+                const isCorrect = selectedIndex === parseInt(question.correct);
+
+                // Show feedback
+                const labels = questionContainer.querySelectorAll('label');
+                const inputs = questionContainer.querySelectorAll('input[type="radio"]');
+                inputs.forEach(input => input.disabled = true);
+
+                labels.forEach((label, index) => {
+                    if (index === parseInt(question.correct)) {
+                        label.classList.add('text-green-700', 'font-bold');
+                    } else if (index === selectedIndex && !isCorrect) {
+                        label.classList.add('text-red-700', 'font-bold');
+                    }
+                });
+
+                if (isCorrect) {
+                    score++;
+                }
+
+                // Wait a moment before moving to next question
+                setTimeout(() => {
+                    currentQuestion++;
+                    if (currentQuestion < quiz.questions.length) {
+                        displayQuestion();
+                    } else {
+                        // Save score and show results
+                        const finalScore = Math.round((score / quiz.questions.length) * 100);
+                        
+                        // Save to leaderboard with additional metadata
+                        const scores = JSON.parse(localStorage.getItem('scores')) || [];
+                        scores.push({
+                            user: localStorage.getItem('currentUser') || 'Anonymous',
+                            quiz: quiz.title,
+                            score: `${score} out of ${quiz.questions.length}`,
+                            percentage: finalScore,
+                            timestamp: new Date().toISOString(),
+                            isUserCreated: true // Add this flag to identify user-created quizzes
+                        });
+                        localStorage.setItem('scores', JSON.stringify(scores));
+
+                        // Display results
+                        questionContainer.innerHTML = `
+                            <div class="text-center">
+                                <h2 class="text-2xl font-bold mb-4">Quiz Complete!</h2>
+                                <p class="text-lg mb-4">Your score: ${score} out of ${quiz.questions.length} (${finalScore}%)</p>
+                                <div class="space-x-4">
+                                    <button onclick="window.location.href='NewQuiz.html'" 
+                                            class="bg-blue-500 hover:bg-blue-700 text-white px-4 py-2 rounded transition-colors">
+                                        Back to Quizzes
+                                    </button>
+                                    <button onclick="window.location.href='Leaderboard.html'" 
+                                            class="bg-green-500 hover:bg-green-700 text-white px-4 py-2 rounded transition-colors">
+                                        View Leaderboard
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                }, 1000);
+            };
+
+        });
+    </script>
+</body>
+</html>

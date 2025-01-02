@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Quiz Website</title>
+</head>
+<body class="parallax-body" style="background-image: url('images/gettyimages-1428792471-640x640.jpg');">
+    <div id="UserInfo" class="text-center mt-4">
+        <!-- User info will be displayed here -->
+    </div>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="content-wrapper">
+        <!-- header -->
+        <div class="header">
+            <div class="container mx-auto">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-6xl font-bold text-gray-900">Quiz Website</h1>
+                </div>
+                <!-- navigation -->
+                <div class="navigation flex justify-center space-x-4 mt-4">
+                    <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                    <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                    <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                    <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                    <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <!-- School Quiz header -->
+        <div class="sub-header bg-gray-200 py-10">
+            <div class="container mx-auto text-center">
+                <br>
+                <h2 class="text-4xl font-bold text-gray-900">School Fun!</h2>
+                <p class="text-gray-600">Stuff that you likely learnt in school</p>
+                <img src="images/school-building-educational-institution-college_107791-1051.avif" alt="Video Games" class="w-full h-96 object-cover">
+                <br>
+            </div>
+        </div>
+
+        <!-- School Quizzes -->
+        <div class="grid grid-cols-2 gap-2">
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">History</h2>
+                <p class="text-gray-600">How little did you sleep in history, well find out here!</p>
+                <br>
+                <a href="history_school.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">Biology</h2>
+                <p class="text-gray-600">Biology teaches were the best, if you disagree; fight me.</p>
+                <br>
+                <a href="biology.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">Mathematics</h2>
+                <p class="text-gray-600">Let's see how traumatised by kumon you are.</p>
+                <br>
+                <a href="math.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">English</h2>
+                <p class="text-gray-600">Are you the yapper or the yappee.</p>
+                <br>
+                <a href="english.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+        </div>
+
+        <!-- Video Games Header -->
+        <div class="sub-header bg-gray-200 py-10">
+            <div class="container mx-auto text-center">
+                <br>
+                <h2 class="text-4xl font-bold text-gray-900
+                ">Video Games</h2>
+                <p class="text-gray-600">How much of a nerd are you?</p>
+                <img src="images/istockphoto-1334436084-612x612.jpg" alt="Video Games" class="w-full h-96 object-cover">
+                <br>
+            </div>
+        </div>
+
+
+        <!-- Video Games Quiz -->
+        <div class="grid grid-cols-2 gap-2">
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">Minecraft</h2>
+                <p class="text-gray-600">Test your knowledge on Minecraft.</p>
+                <br>
+                <a href="minecraft.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">History</h2>
+                <p class="text-gray-600">How much of gaming histoy do you actually know?</p>
+                <br>
+                <a href="history_games.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">Guess the character</h2>
+                <p class="text-gray-600">Every game has an iconic character, can you guess them?</p>
+                <br>
+                <a href="character.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+            <div class="bg-gray-200 p-4 m-2 rounded-lg">
+                <h2 class="text-2xl font-bold text-gray-800">Guess the game</h2>
+                <p class="text-gray-600">Over history, many games have came out; how many do you know?</p>
+                <br>
+                <a href="guess.html" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">Start Quiz</a>
+            </div>
+        </div>
+
+        <!-- User Created Quizzes Header -->
+        <div class="sub-header bg-gray-200 py-10">
+            <div class="container mx-auto text-center">
+                <br>
+                <h2 class="text-4xl font-bold text-gray-900">Community Quizzes</h2>
+                <p class="text-gray-600">Check out quizzes created by other users!</p>
+                <img src="images/shutterstock_749036344.webp" alt="Community Quizzes" class="w-full h-96 object-cover">
+                <br>
+            </div>
+        </div>
+
+        <!-- User Created Quizzes Grid -->
+        <div id="userQuizzes" class="grid grid-cols-2 gap-2">
+            <!-- Quizzes will be loaded here -->
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div class="container mx-auto text-center">
+                <h2 class="text-2xl font-bold text-blac k">Quiz Website</h2>
+                <p class="text-gray-400">Designed by Jun Han</p>
+            </div>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                document.getElementById('UserInfo').innerHTML = `
+                <div class="bg-green-100 text-green-800 font-bold py-2 px-4 rounded inline-block">
+                    Welcome, ${currentUser}!
+                </div>`;
+                const loginButton = document.querySelector('button[onclick="location.href=\'login.html\'"]');
+                if (loginButton) {
+                    loginButton.textContent = 'Profile';
+                    loginButton.setAttribute('onclick', "location.href='profile.html'");
+                }
+            }
+        });
+
+        // Add this new function to load user created quizzes
+        function loadUserCreatedQuizzes() {
+            const userQuizzesContainer = document.getElementById('userQuizzes');
+            const quizzes = JSON.parse(localStorage.getItem('createdQuizzes')) || [];
+
+            if (quizzes.length === 0) {
+                userQuizzesContainer.innerHTML = `
+                    <div class="col-span-2 text-center p-8">
+                        <p class="text-gray-600">No community quizzes available yet.</p>
+                        <a href="NewQuiz.html" class="inline-block mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold">
+                            Create the First Quiz
+                        </a>
+                    </div>`;
+                return;
+            }
+
+            userQuizzesContainer.innerHTML = quizzes.map((quiz, index) => `
+                <div class="bg-gray-200 p-4 m-2 rounded-lg quiz-card hover:shadow-lg transition-all">
+                    <h2 class="text-2xl font-bold text-gray-800">${quiz.title}</h2>
+                    <p class="text-gray-600 mb-2">${quiz.about || 'No description available'}</p>
+                    <p class="text-gray-600">${quiz.questions.length} questions</p>
+                    <p class="text-gray-500 text-sm">Created: ${new Date(quiz.createdAt).toLocaleDateString()}</p>
+                    <br>
+                    <button onclick="startUserQuiz(${index})" 
+                            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-400 font-bold dark:text-white">
+                        Start Quiz
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Add function to start user created quiz
+        function startUserQuiz(index) {
+            const quizzes = JSON.parse(localStorage.getItem('createdQuizzes')) || [];
+            const quiz = quizzes[index];
+            if (quiz) {
+                localStorage.setItem('currentQuiz', JSON.stringify(quiz));
+                window.location.href = 'play-quiz.html';
+            }
+        }
+
+        // Load user created quizzes when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadUserCreatedQuizzes();
+        });
+    </script>
+    <script src="script.js"></script>
+
+</body>
+</html>

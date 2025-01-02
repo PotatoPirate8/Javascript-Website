@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="parallax-body" style="background-image: url('images/gettyimages-1428792471-640x640.jpg ');">
+    <div id="UserInfo" class="text-center mt-4">
+        <!-- User info will be displayed here -->
+    </div>
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <!-- header -->
+    <div class="header">
+        <div class="container mx-auto">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Quiz Website</h1>
+            </div>
+            <!-- navigation -->
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='profile.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Section -->
+    <div class="container mx-auto p-4 max-w-2xl bg-white rounded-lg shadow-md mt-10">
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">User Profile</h2>
+        <div id="profileInfo" class="text-gray-700">
+            <!-- User details will be displayed here -->
+        </div>
+        <button id="logoutButton" class="w-full bg-red-500 text-white p-2 rounded mt-4">Log Out</button>
+    </div>
+
+    <br>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = localStorage.getItem('currentUser');
+            const users = JSON.parse(localStorage.getItem('users')) || {};
+            const user = users[currentUser] || {};
+            const scores = JSON.parse(localStorage.getItem('scores')) || [];
+            const userScores = scores.filter(score => score.user === currentUser);
+
+            // Calculate top scores per quiz
+            const topScores = userScores.reduce((acc, score) => {
+                if (!acc[score.quiz] || acc[score.quiz].score < score.score) {
+                    acc[score.quiz] = { score: score.score };
+                }
+                return acc;
+            }, {});
+
+            // Count all completed quizzes including user-created ones
+            const quizzesCompleted = userScores.reduce((total, score) => {
+                const createdQuizzes = JSON.parse(localStorage.getItem('createdQuizzes')) || [];
+                if (!score.quiz || createdQuizzes.some(quiz => quiz.title === score.quiz)) {
+                    return total + 1;
+                }
+                return total;
+            }, 0);
+
+            if (currentUser) {
+                document.getElementById('profileInfo').innerHTML = `
+                <div class="flex flex-col items-center">
+                    <img src="images/pngtree-customer-login-avatar-png-image_6015290.jpg" alt="Avatar" class="w-24 h-24 rounded-full mb-4">
+                    <p class="text-xl"><strong>Username:</strong> ${currentUser}</p>
+                    <p class="text-xl"><strong>Email:</strong> <input type="email" id="email" value="${user.email || ''}" class="border border-gray-300 rounded p-2"></p>
+                    <p class="text-xl"><strong>Member since:</strong> ${user.memberSince || 'Unknown'}</p>
+                    <p class="text-xl"><strong>Quizzes Completed:</strong> ${quizzesCompleted}</p>
+                    <div class="text-xl"><strong>Top Scores:</strong>
+                        <ul class="list-disc list-inside">
+                            ${Object.entries(topScores)
+                                .map(([quiz, data]) => `<li>${quiz}: ${data.score}</li>`)
+                                .join('')}
+                        </ul>
+                    </div>
+                    <button id="saveButton" class="bg-blue-500 text-white p-2 rounded mt-4">Save</button>
+                </div>`;
+
+                document.getElementById('saveButton').addEventListener('click', () => {
+                    const email = document.getElementById('email').value;
+                    users[currentUser] = { 
+                        ...users[currentUser], 
+                        email,
+                        password: users[currentUser].password, // preserve existing password
+                        memberSince: users[currentUser].memberSince || new Date().toLocaleDateString() 
+                    };
+                    localStorage.setItem('users', JSON.stringify(users));
+                    alert('Profile updated successfully!');
+                });
+            } else {
+                document.getElementById('profileInfo').innerHTML = '<p>No user logged in.</p>';
+            }
+
+            // Add logout button functionality
+            const logoutButton = document.getElementById('logoutButton');
+            if (logoutButton) {
+                logoutButton.addEventListener('click', () => {
+                    localStorage.removeItem('currentUser');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+    </script>
+
+<script src="script.js"></script>
+
+</body>
+</html>

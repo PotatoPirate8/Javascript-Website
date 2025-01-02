@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>English-Quiz Website</title>
+    <style>
+        body {
+            background-image: url('images/creative-english-alphabet-texture-background-high-resolution-89699760.webp');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        .header {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+        .quiz {
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        .footer {
+            position: sticky;
+        }
+    </style>
+</head>
+<body class="parallax-body">
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    <div class="header">
+        <div class="container mx-auto w-full px-4">
+            <div class="flex justify-between items-center py-4">
+                <h1 class="text-6xl font-bold text-gray-900">Quiz Website</h1>
+            </div>
+            <div class="quiz-type flex justify-center space-x-4 mt-4">
+                <h2 class="text-4xl font-bold text-blue-900">English-School</h2>
+            </div>  
+            <div class="navigation flex justify-center space-x-4 mt-4">
+                <button onclick="location.href='index.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Home</button>
+                <button onclick="location.href='NewQuiz.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">NewQuiz</button>
+                <button onclick="location.href='contact.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Contact</button>
+                <button onclick="location.href='Leaderboard.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Leaderboard</button>                
+                <button onclick="location.href='login.html'" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Login</button>
+            </div>
+        </div>
+        <div id="UserInfo"></div>
+    </div>
+    <div class="quiz bg-gray-200 py-10">
+        <div class="container mx-auto w-full">
+            <div class="w-full max-w-5xl">
+                <div class="bg-white p-12 rounded shadow-md">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Question 1</h2>
+                    <p class="text-gray-600 mb-6 text-xl">What is the synonym of 'happy'?</p>
+                    <form id="quizForm">
+                        <input type="radio" name="answer" value="a" id="a" required>
+                        <label for="a" class="ml-2">a) Sad</label><br>
+                        <input type="radio" name="answer" value="b" id="b">
+                        <label for="b" class="ml-2">b) Joyful</label><br>
+                        <input type="radio" name="answer" value="c" id="c">
+                        <label for="c" class="ml-2">c) Angry</label><br>
+                        <input type="radio" name="answer" value="d" id="d">
+                        <label for="d" class="ml-2">d) Tired</label><br>
+                        <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                    </form>
+                </div>
+            </div>            
+        </div>
+    </div>
+    <!-- Footer -->
+    <div class="footer">
+        <div class="container mx-auto text-center">
+            <h2 class="text-2xl font-bold text-black">Quiz Website</h2>
+            <p class="text-gray-400">Designed by Jun Han</p>
+        </div>
+        <br>
+        <br>
+    </div>
+    <script>
+    let quizQuestions = [
+        {
+            question: "What is the synonym of 'happy'?",
+            options: ["Sad", "Joyful", "Angry", "Tired"],
+            correctAnswer: "b",
+            explanation: "The synonym of 'happy' is 'joyful'."
+        },
+        {
+            question: "What is the antonym of 'difficult'?",
+            options: ["Easy", "Hard", "Challenging", "Tough"],
+            correctAnswer: "a",
+            explanation: "The antonym of 'difficult' is 'easy'."
+        },
+        {
+            question: "Which of the following is a noun?",
+            options: ["Run", "Quickly", "Happiness", "Blue"],
+            correctAnswer: "c",
+            explanation: "A noun is a person, place, thing, or idea. 'Happiness' is a noun."
+        },
+        {
+            question: "What is the past tense of 'go'?",
+            options: ["Goes", "Went", "Gone", "Going"],
+            correctAnswer: "b",
+            explanation: "The past tense of 'go' is 'went'."
+        },
+        {
+            question: "Which of the following is a verb?",
+            options: ["Beautiful", "Quickly", "Run", "Blue"],
+            correctAnswer: "c",
+            explanation: "A verb is an action word. 'Run' is a verb."
+        },
+        {
+            question: "What is the plural form of 'child'?",
+            options: ["Childs", "Children", "Childes", "Childrens"],
+            correctAnswer: "b",
+            explanation: "The plural form of 'child' is 'children'."
+        },
+        {
+            question: "What is the adjective in the sentence: 'The quick brown fox jumps over the lazy dog'?",
+            options: ["Quick", "Fox", "Jumps", "Dog"],
+            correctAnswer: "a",
+            explanation: "'Quick' is the adjective describing the fox."
+        },
+        {
+            question: "What is the correct form of the verb in the sentence: 'She ____ to the store.'?",
+            options: ["Go", "Goes", "Going", "Gone"],
+            correctAnswer: "b",
+            explanation: "The correct form of the verb is 'goes'."
+        },
+        {
+            question: "Which of the following is an adverb?",
+            options: ["Quickly", "Quick", "Quicker", "Quickest"],
+            correctAnswer: "a",
+            explanation: "An adverb describes how an action is performed. 'Quickly' is an adverb."
+        },
+        {
+            question: "What is the correct article in the sentence: 'I saw ____ elephant at the zoo.'?",
+            options: ["A", "An", "The", "None"],
+            correctAnswer: "b",
+            explanation: "The correct article is 'an' because 'elephant' starts with a vowel sound."
+        }
+    ];  
+
+    let userAnswers = [];
+    let currentQuestionIndex = 0;
+
+    function renderQuestion() {
+        const question = quizQuestions[currentQuestionIndex];
+        document.querySelector('.quiz').innerHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Question ${currentQuestionIndex + 1}</h2>
+                        <p class="text-gray-600 mb-6 text-xl">${question.question}</p>
+                        <form id="quizForm">
+                            ${question.options.map((option, index) => `
+                                <input type="radio" name="answer" value="${String.fromCharCode(97 + index)}" id="${String.fromCharCode(97 + index)}" ${index === 0 ? 'required' : ''}>
+                                <label for="${String.fromCharCode(97 + index)}" class="ml-2">${String.fromCharCode(97 + index)}) ${option}</label><br>
+                            `).join('')}
+                            <button type="submit" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.getElementById('quizForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedAnswer = document.querySelector('input[name="answer"]:checked').value;
+            userAnswers.push({
+                questionIndex: currentQuestionIndex,
+                selectedAnswer: selectedAnswer,
+                isCorrect: selectedAnswer === question.correctAnswer
+            });
+
+            currentQuestionIndex++;
+
+            if (currentQuestionIndex < quizQuestions.length) {
+                renderQuestion();
+            } else {
+                renderResults();
+            }
+        });
+    }
+
+    function renderResults() {
+        const correctAnswersCount = userAnswers.filter(answer => answer.isCorrect).length;
+        
+        // Save the score to localStorage
+        let scores = JSON.parse(localStorage.getItem('scores')) || [];
+        scores.push({ user: localStorage.getItem('currentUser'), quiz: 'English', score: correctAnswersCount });
+        localStorage.setItem('scores', JSON.stringify(scores));
+
+        const resultsHTML = `
+            <div class="container mx-auto w-full">
+                <div class="w-full max-w-5xl">
+                    <div class="bg-white p-12 rounded shadow-md">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-6">Quiz Results</h2>
+                        <p class="text-gray-600 mb-6 text-xl">You got ${correctAnswersCount} out of ${quizQuestions.length} questions correct.</p>
+                        <div class="space-y-4">
+                            ${userAnswers.map(answer => {
+                                const question = quizQuestions[answer.questionIndex];
+                                return `
+                                <div class="bg-${answer.isCorrect ? 'green' : 'red'}-100 p-4 rounded">
+                                    <h3 class="font-bold text-lg mb-2">Question ${answer.questionIndex + 1}: ${question.question}</h3>
+                                    <p class="mb-2">Your Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(answer.selectedAnswer)]} (${answer.selectedAnswer})</p>
+                                    <p class="mb-2">Correct Answer: ${question.options[question.options.map((_, index) => String.fromCharCode(97 + index)).indexOf(question.correctAnswer)]} (${question.correctAnswer})</p>
+                                    <p class="italic">${question.explanation}</p>
+                                </div>
+                            `}).join('')}
+                        </div>
+                        <button onclick="location.reload()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Restart Quiz</button>
+                        <button onclick="location.href='Leaderboard.html'" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">View Leaderboard</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.querySelector('.quiz').innerHTML = resultsHTML;
+    }
+
+    renderQuestion();
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

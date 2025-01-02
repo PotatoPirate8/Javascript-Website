@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <ling rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="parallax-body" style="background-image: url('images/gettyimages-1428792471-640x640.jpg');">
+    <!-- Dark mode toggle button -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">
+        <i class="fas fa-moon"></i>
+    </button>
+    
+    <br>
+    <br>
+    <div class="container mx-auto p-4 max-w-md bg-white rounded-lg shadow-md">
+        <form>
+            <div class="imgcontainer flex justify-center mb-4">
+                <img src="images/pngtree-customer-login-avatar-png-image_6015290.jpg" alt="Avatar" class="avatar w-24 h-24 rounded-full">
+            </div>
+        
+            <div class="container">
+                <label for="uname" class="block text-gray-700"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="uname" required class="w-full p-2 border border-gray-300 rounded mt-1 mb-4">
+            
+                <label for="psw" class="block text-gray-700"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="psw" required class="w-full p-2 border border-gray-300 rounded mt-1 mb-4">
+            
+                <button type="submit" class="w-full bg-blue-500 text-white p-2 rounded mt-4">Login</button>
+                <label class="block mt-4">
+                    <input type="checkbox" checked="checked" name="remember" class="mr-2"> Remember me
+                </label>
+                <button type="button" class="w-full bg-red-500 text-white p-2 rounded mt-4" onclick="window.location.href='index.html'">Cancel</button>
+                <span class="block text-center mt-2 text-gray-600">New? <a href="create_user.html" target="_blank" class="text-blue-500">Create User</a></span>
+            </div>
+        </form>
+    </div>
+    <br>
+    <br>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize dark mode
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                const darkModeToggle = document.querySelector('.dark-mode-toggle i');
+                if (darkModeToggle) {
+                    darkModeToggle.classList.remove('fa-moon');
+                    darkModeToggle.classList.add('fa-sun');
+                }
+            }
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                document.getElementById('UserInfo').innerHTML = `
+                <div class="bg-green-100 text-green-800 font-bold py-2 px-4 rounded inline-block">
+                    Welcome, ${currentUser}!
+                </div>`;
+                const loginButton = document.querySelector('button[onclick="location.href=\'login.html\'"]');
+                if (loginButton) {
+                    loginButton.textContent = 'Profile';
+                    loginButton.setAttribute('onclick', "location.href='profile.html'");
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>
